@@ -1,0 +1,50 @@
+.PlanCard {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+
+    height: 407px;
+    width: 297px;
+
+    border-radius: 20px;
+    box-shadow: 9px 9px 47px 0 #00000040;
+
+    padding-top: 33px;
+}
+
+.PlanTitle {
+    font-size: 35px;
+    font-weight: 700;
+    line-height: 48px;
+    margin-bottom: 20px;
+}
+
+.PlanPrice {
+    color: #A8DDDD;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 27px;
+}
+
+.PlanDesc {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    text-align: start;
+    margin: 20px 0 29px 0;
+}
+
+.PlanDesc > li {
+    margin-bottom: 11px;
+}
+
+.PlanBtn {
+    width: 165px;
+    height: 45px;
+    background: #A8DDDD;
+    border: none;
+    border-radius: 20px;
+
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+}
