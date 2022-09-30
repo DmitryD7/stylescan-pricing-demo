@@ -4,6 +4,13 @@
     flex-wrap: wrap;
 }
 
+.Header {
+    font-weight: 500;
+    font-size: 33px;
+    line-height: 40px;
+    margin-bottom: 51px;
+}
+
 @media screen and (max-width: 1060px) {
     .PlansList {
         flex-direction: column;

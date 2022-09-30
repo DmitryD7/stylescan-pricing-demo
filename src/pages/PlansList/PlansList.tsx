@@ -43,6 +43,7 @@ function PlansList() {
 
     return (
         <>
+            <h1 className={s.Header}>Choose the subscription that works for you</h1>
             <section className={s.PlansList}>
                 {plans.map(plan => <PlanCard
                     key={plan.price}

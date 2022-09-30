@@ -11,7 +11,6 @@ function App() {
     return (
         <div className={s.Container}>
             <div className={s.App}>
-                <h1 className={s.Header}>Choose the subscription that works for you</h1>
                 <Routes>
                     <Route index element={<PlansList/>}/>
                     <Route path={'success'} element={<SuccessPage/>}/>
