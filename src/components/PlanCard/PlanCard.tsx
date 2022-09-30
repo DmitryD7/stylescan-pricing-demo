@@ -1,22 +1,59 @@
 import React from 'react';
 import s from './PlanCard.module.css';
 import {IPlan} from "../../assets/plans";
+import {Link} from 'react-router-dom';
+import mostPopularIco from '../../assets/Vector.svg'
 
-function PlanCard(props: IPlan) {
-    const {title, price, description, isMostPopular} = props;
+function PlanCard(props: PlanCardPropsType) {
+    const {title, priceUI, description, isMostPopular, isDisabledButton, onBuyClick, price, quantity} = props;
+
+    const onClickHandler = () => onBuyClick({price, quantity});
+
+    const ButtonMailto = () => {
+        return (
+            <button className={s.PlanBtn}>
+                <Link
+                    to='#'
+                    onClick={(e) => {
+                        window.location.href = "mailto:info@stylescan.com";
+                        e.preventDefault();
+                    }}
+                >
+                    {isDisabledButton ? 'Loading...' : 'Contact Us'}
+                </Link>
+            </button>
+        );
+    };
 
     return (
         <div className={s.PlanCard}>
+            {isMostPopular && <img src={mostPopularIco} alt="most popular plan" className={s.MostPopular}/>}
             <h2 className={s.PlanTitle}>{title}</h2>
-            <h3 className={s.PlanPrice}>{price !== 0 ? `US $${price}/mo.` : 'Contact Us at info@stylescan.com'}</h3>
+            {priceUI !== 0
+                ? <h3 className={s.PlanPrice}>{`US $${priceUI}/mo.`}</h3>
+                : <span className={s.PlanPriceMessage}>Contact Us at info@stylescan.com</span>
+            }
 
             <ul className={s.PlanDesc}>
                 {description.map(d => <li key={d}>{d}</li>)}
             </ul>
 
-            <button className={s.PlanBtn}>{price !== 0 ? 'Buy now' : 'Contact Us'}</button>
+            {priceUI !== 0
+                ? <button
+                    className={s.PlanBtn}
+                    disabled={isDisabledButton}
+                    onClick={onClickHandler}
+                >{isDisabledButton ? 'Loading...' : 'Buy now'}
+                </button>
+                : <ButtonMailto/>
+            }
         </div>
     );
+}
+
+type PlanCardPropsType = IPlan & {
+    isDisabledButton: boolean
+    onBuyClick: (item: { price: string, quantity: number }) => void
 }
 
 export default PlanCard;

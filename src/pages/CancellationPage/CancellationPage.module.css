@@ -8,6 +8,7 @@
     box-shadow: 9px 9px 47px 0 #00000040;
 
     padding: 40px 0;
+    margin: 0 auto;
 }
 
 .CancelIco {
@@ -33,4 +34,10 @@
     font-weight: 700;
     font-size: 16px;
     line-height: 22px;
+}
+
+.CancelBtn:hover {
+    cursor: pointer;
+    background-color: #327979;
+    color: #fff;
 }
