@@ -23,21 +23,3 @@
 .CancelInfo {
     margin-bottom: 3rem;
 }
-
-.CancelBtn {
-    width: 165px;
-    height: 45px;
-    background: #A8DDDD;
-    border: none;
-    border-radius: 20px;
-
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 22px;
-}
-
-.CancelBtn:hover {
-    cursor: pointer;
-    background-color: #327979;
-    color: #fff;
-}

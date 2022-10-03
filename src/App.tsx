@@ -4,6 +4,7 @@ import s from './App.module.css';
 import PlansList from "./pages/PlansList/PlansList";
 import SuccessPage from "./pages/SuccessPage/SuccessPage";
 import CancellationPage from "./pages/CancellationPage/CancellationPage";
+import Header from "./components/Header/Header";
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
     return (
         <div className={s.Container}>
             <div className={s.App}>
+                <Header/>
                 <Routes>
                     <Route index element={<PlansList/>}/>
                     <Route path={'success'} element={<SuccessPage/>}/>

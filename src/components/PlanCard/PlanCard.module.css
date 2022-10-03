@@ -23,14 +23,16 @@
 }
 
 .PlanPrice {
-    color: #A8DDDD;
+    /*color: #A8DDDD;*/
+    font-style: italic;
     font-size: 20px;
     font-weight: 700;
     line-height: 27px;
 }
 
 .PlanPriceMessage {
-    color: #A8DDDD;
+    /*color: #A8DDDD;*/
+    font-style: italic;
     font-weight: 500;
     font-size: 18px;
     line-height: 7px;
@@ -49,31 +51,11 @@
 }
 
 .PlanBtn {
-    width: 165px;
-    height: 45px;
-    background: #A8DDDD;
-    border: none;
-    border-radius: 20px;
-
-    font-weight: 700;
-    font-size: 16px;
-
     position: absolute;
     left: 0;
     right: 0;
     margin: 0 auto;
     bottom: 35px;
-}
-
-.PlanBtn > a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.PlanBtn:hover {
-    cursor: pointer;
-    background-color: #327979;
-    color: #fff;
 }
 
 .MostPopular {

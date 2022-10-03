@@ -2,6 +2,7 @@ import React from 'react';
 import successIco from '../../assets/successIco.svg'
 import s from './SuccessPage.module.css';
 import {Link} from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 function SuccessPage() {
     return (
@@ -10,7 +11,7 @@ function SuccessPage() {
             <h2 className={s.SuccessHeader}>Payment successful!</h2>
             <p className={s.SuccessInfo}>Thanks for your purchase. Invoice has been sent to your email.</p>
             <Link to={'/'}>
-                <button className={s.SuccessBtn}>Go back</button>
+                <Button>Go Back</Button>
             </Link>
         </div>
     );

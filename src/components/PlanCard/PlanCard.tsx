@@ -3,6 +3,7 @@ import s from './PlanCard.module.css';
 import {IPlan} from "../../assets/plans";
 import {Link} from 'react-router-dom';
 import mostPopularIco from '../../assets/Vector.svg'
+import Button from "../Button/Button";
 
 function PlanCard(props: PlanCardPropsType) {
     const {title, priceUI, description, isMostPopular, isDisabledButton, onBuyClick, price, quantity} = props;
@@ -11,7 +12,7 @@ function PlanCard(props: PlanCardPropsType) {
 
     const ButtonMailto = () => {
         return (
-            <button className={s.PlanBtn}>
+            <Button>
                 <Link
                     to='#'
                     onClick={(e) => {
@@ -21,7 +22,7 @@ function PlanCard(props: PlanCardPropsType) {
                 >
                     {isDisabledButton ? 'Loading...' : 'Contact Us'}
                 </Link>
-            </button>
+            </Button>
         );
     };
 
@@ -38,15 +39,16 @@ function PlanCard(props: PlanCardPropsType) {
                 {description.map(d => <li key={d}>{d}</li>)}
             </ul>
 
-            {priceUI !== 0
-                ? <button
-                    className={s.PlanBtn}
-                    disabled={isDisabledButton}
-                    onClick={onClickHandler}
-                >{isDisabledButton ? 'Loading...' : 'Buy now'}
-                </button>
-                : <ButtonMailto/>
-            }
+            <div className={s.PlanBtn}>
+                {priceUI !== 0
+                    ? <Button
+                        disabled={isDisabledButton}
+                        onClick={onClickHandler}
+                    >{isDisabledButton ? 'Loading...' : 'Buy now'}
+                    </Button>
+                    : <ButtonMailto/>
+                }
+            </div>
         </div>
     );
 }

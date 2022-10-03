@@ -2,6 +2,7 @@ import React from 'react';
 import s from './CancellationPage.module.css';
 import cancelIco from "../../assets/errorIco.svg";
 import {Link} from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 function CancellationPage() {
     return (
@@ -10,7 +11,7 @@ function CancellationPage() {
             <h2 className={s.CancelHeader}>Payment was canceled.</h2>
             <p className={s.CancelInfo}>Try again or contact info@stylescan.com for help.</p>
             <Link to={'/'}>
-                <button className={s.CancelBtn}>Go back</button>
+                <Button>Go Back</Button>
             </Link>
         </div>
     );
