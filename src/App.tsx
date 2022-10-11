@@ -12,15 +12,15 @@ function App() {
 
     return (
         <div className={s.Container}>
-            <LoginPage/>
-            {/*<div className={s.App}>*/}
-            {/*    <Header/>*/}
-            {/*    <Routes>*/}
-            {/*        <Route index element={<PlansList/>}/>*/}
-            {/*        <Route path={'success'} element={<SuccessPage/>}/>*/}
-            {/*        <Route path={'cancel'} element={<CancellationPage/>}/>*/}
-            {/*    </Routes>*/}
-            {/*</div>*/}
+            {/*<LoginPage/>*/}
+            <div className={s.App}>
+                <Header/>
+                <Routes>
+                    <Route index element={<PlansList/>}/>
+                    <Route path={'success'} element={<SuccessPage/>}/>
+                    <Route path={'cancel'} element={<CancellationPage/>}/>
+                </Routes>
+            </div>
         </div>
     );
 }

@@ -9,10 +9,10 @@ export const authAPI = {
     me() {
         return instance.get('');
     },
-    signUp(data: SignupDataType) {
+    signUp(data: SignupParamsType) {
         return instance.post('signup', data);
     },
-    login(data: LoginDataType) {
+    login(data: LoginParamsType) {
         return instance.post('login', data);
     },
     logout() {
@@ -32,12 +32,12 @@ export const authAPI = {
     },
 };
 
-export type LoginDataType = {
+export type LoginParamsType = {
     email: string,
     password: string,
 }
 
-type SignupDataType = LoginDataType & { redirect?: string }
+export type SignupParamsType = LoginParamsType & { redirect?: string }
 
 type RequestResetPasswordType = {
     email: string,

@@ -1,10 +1,10 @@
 import React from 'react';
 import s from './LoginPage.module.css';
-import {LoginDataType} from "../../api/api";
+import {LoginParamsType} from "../../api/api";
 import {FormikHelpers, useFormik} from "formik";
 
 function LoginPage() {
-    const validate = (values: LoginDataType) => {
+    const validate = (values: LoginParamsType) => {
         const errors: FormErrorType = {};
 
         if (!values.email) {
