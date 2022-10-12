@@ -53,15 +53,6 @@
     background-color: #3b3b3b;
 }
 
-.LoginPage_ForgotPasswBtn > a {
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 400;
-    color: #9E9356;
-    position: absolute;
-    right: 0;
-}
-
 .LoginPage_Form_Element_Error {
     color: red;
     position: absolute;

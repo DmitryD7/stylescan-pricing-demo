@@ -3,7 +3,7 @@ import s from './SignupPage.module.css';
 import {FormikHelpers, useFormik} from "formik";
 import {useSelector} from "react-redux";
 import {authActions, selectIsLoggedIn} from "../../app/authReducer";
-import {Link, Navigate} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import {emailValidate, passwordConfirmValidate, passwordValidate, useAppDispatch} from "../../utils/utils";
 import {FormErrorType} from "../../app/types";
 
@@ -28,8 +28,10 @@ function SignupPage() {
             passwordConfirmation: '',
         },
         validate,
-        onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            await dispatch(authActions.signup(values))
+        onSubmit: (values, formikHelpers: FormikHelpers<FormValuesType>) => {
+            console.log('click')
+            console.log(values)
+            // await dispatch(authActions.signup(values))
         },
     });
 
@@ -39,8 +41,8 @@ function SignupPage() {
 
     return (
         <div className={s.LoginPage}>
-            <h1 className={s.LoginPage_Header}>Login</h1>
-            <h3 className={s.LoginPage_NewAcc}>New to StyleScan?</h3>
+            <h1 className={s.LoginPage_Header}>Signup</h1>
+            <h3 className={s.LoginPage_NewAcc}>Already have an account?</h3>
             <div className={s.LoginPage_Form}>
                 <form onSubmit={formik.handleSubmit}>
                     <div className={s.LoginPage_Form_Element}>
@@ -49,7 +51,8 @@ function SignupPage() {
                             placeholder={'Email'}
                             {...formik.getFieldProps('email')}
                         />
-                        {formik.errors.email ? <div className={s.LoginPage_Form_Element_Error}>{formik.errors.email}</div> : null}
+                        {formik.errors.email ?
+                            <div className={s.LoginPage_Form_Element_Error}>{formik.errors.email}</div> : null}
                     </div>
 
                     <div className={s.LoginPage_Form_Element}>
@@ -58,8 +61,8 @@ function SignupPage() {
                             placeholder={'Password'}
                             {...formik.getFieldProps('password')}
                         />
-                        <div className={s.LoginPage_ForgotPasswBtn}><Link to={'/'}>Forgot password?</Link></div>
-                        {formik.errors.password ? <div className={s.LoginPage_Form_Element_Error}>{formik.errors.password}</div> : null}
+                        {formik.errors.password ?
+                            <div className={s.LoginPage_Form_Element_Error}>{formik.errors.password}</div> : null}
                     </div>
 
                     <div className={s.LoginPage_Form_Element}>
@@ -68,8 +71,8 @@ function SignupPage() {
                             placeholder={'Confirm your password'}
                             {...formik.getFieldProps('passwordConfirmation')}
                         />
-                        <div className={s.LoginPage_ForgotPasswBtn}><Link to={'/'}>Forgot password?</Link></div>
-                        {formik.errors.passwordConfirmation ? <div className={s.LoginPage_Form_Element_Error}>{formik.errors.passwordConfirmation}</div> : null}
+                        {formik.errors.passwordConfirmation ? <div
+                            className={s.LoginPage_Form_Element_Error}>{formik.errors.passwordConfirmation}</div> : null}
                     </div>
 
                     <button className={s.LoginPage_Form_Btn} type={"submit"}>Signup</button>
