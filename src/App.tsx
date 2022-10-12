@@ -6,19 +6,21 @@ import SuccessPage from "./pages/SuccessPage/SuccessPage";
 import CancellationPage from "./pages/CancellationPage/CancellationPage";
 import Header from "./components/Header/Header";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import SignupPage from "./pages/SignupPage/SignupPage";
 
 function App() {
 
 
     return (
         <div className={s.Container}>
-            {/*<LoginPage/>*/}
             <div className={s.App}>
                 <Header/>
                 <Routes>
                     <Route index element={<PlansList/>}/>
                     <Route path={'success'} element={<SuccessPage/>}/>
                     <Route path={'cancel'} element={<CancellationPage/>}/>
+                    <Route path={'login'} element={<LoginPage/>}/>
+                    <Route path={'signup'} element={<SignupPage/>}/>
                 </Routes>
             </div>
         </div>
