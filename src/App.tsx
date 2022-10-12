@@ -7,6 +7,8 @@ import CancellationPage from "./pages/CancellationPage/CancellationPage";
 import Header from "./components/Header/Header";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
+import VerifyingEmailPage from "./pages/VerifyingEmailPage/VerifyingEmailPage";
+import ResetPasswPage from "./pages/ResetPasswPage/ResetPasswPage";
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
                     <Route path={'cancel'} element={<CancellationPage/>}/>
                     <Route path={'login'} element={<LoginPage/>}/>
                     <Route path={'signup'} element={<SignupPage/>}/>
+                    <Route path={'verify'} element={<VerifyingEmailPage/>}/>
+                    <Route path={'reset'} element={<ResetPasswPage/>}/>
                 </Routes>
             </div>
         </div>

@@ -15,9 +15,11 @@ function LoginPage() {
     const validate = (values: LoginParamsType) => {
         const errors: FormErrorType = {};
         errors.email = emailValidate(values.email)
-        errors.password = passwordValidate(values.password)
 
-        return errors
+        errors.password = passwordValidate(values.password)
+        console.log(errors)
+
+        return errors.email || errors.password ? errors : {}
     };
 
     const formik = useFormik({
@@ -57,7 +59,7 @@ function LoginPage() {
                             placeholder={'Password'}
                             {...formik.getFieldProps('password')}
                         />
-                        <div className={s.LoginPage_ForgotPasswBtn}><Link to={'/'}>Forgot password?</Link></div>
+                        <div className={s.LoginPage_ForgotPasswBtn}><Link to={'/reset'}>Forgot password?</Link></div>
                         {formik.errors.password ?
                             <div className={s.LoginPage_Form_Element_Error}>{formik.errors.password}</div> : null}
                     </div>

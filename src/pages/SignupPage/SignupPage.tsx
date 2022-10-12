@@ -1,15 +1,13 @@
 import React from 'react';
 import s from './SignupPage.module.css';
 import {FormikHelpers, useFormik} from "formik";
-import {useSelector} from "react-redux";
-import {authActions, selectIsLoggedIn} from "../../app/authReducer";
-import {Navigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {emailValidate, passwordConfirmValidate, passwordValidate, useAppDispatch} from "../../utils/utils";
 import {FormErrorType} from "../../app/types";
 
 function SignupPage() {
-    const isLoggedIn = useSelector(selectIsLoggedIn);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate()
 
     const validate = (values: FormValuesType) => {
         const errors: FormErrorType = {};
@@ -17,9 +15,10 @@ function SignupPage() {
         errors.password = passwordValidate(values.password)
         errors.passwordConfirmation = passwordConfirmValidate(values.passwordConfirmation, values.password)
 
-        return errors
+        return errors.email || errors.password || errors.passwordConfirmation ? errors : {}
     };
 
+    const renderVerifyPage = () => navigate('/verify')
 
     const formik = useFormik({
         initialValues: {
@@ -29,15 +28,12 @@ function SignupPage() {
         },
         validate,
         onSubmit: (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            console.log('click')
             console.log(values)
-            // await dispatch(authActions.signup(values))
+            renderVerifyPage()
+            // const {email, password} = values;
+            // await dispatch(authActions.signup({email, password}))
         },
     });
-
-    if (isLoggedIn) {
-        return <Navigate to={'/'}/>
-    }
 
     return (
         <div className={s.LoginPage}>

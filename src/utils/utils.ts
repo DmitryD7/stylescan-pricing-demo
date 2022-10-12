@@ -1,4 +1,3 @@
-import {LoginParamsType} from "../api/api";
 import {useDispatch} from "react-redux";
 import {AppDispatchType} from "../app/types";
 
@@ -41,7 +40,6 @@ export const passwordConfirmValidate = (password: string, passwConfirm: string) 
 }
 
 
-
 // export const validate = (values: LoginParamsType) => {
 //     const errors: FormErrorType = {};
 //
@@ -59,7 +57,6 @@ export const passwordConfirmValidate = (password: string, passwConfirm: string) 
 //
 //     return errors;
 // };
-
 
 
 export const useAppDispatch = () => useDispatch<AppDispatchType>()

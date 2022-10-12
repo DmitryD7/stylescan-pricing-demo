@@ -5,7 +5,7 @@ export type RootReducerType = typeof rootReducer;
 export type AppDispatchType = typeof store.dispatch;
 
 export type FormErrorType = {
-    email?: string
-    password?: string
+    email?: string | null
+    password?: string | null
     passwordConfirmation?: string
 }
