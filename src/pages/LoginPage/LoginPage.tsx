@@ -14,12 +14,10 @@ function LoginPage() {
 
     const validate = (values: LoginParamsType) => {
         const errors: FormErrorType = {};
-        errors.email = emailValidate(values.email)
+        errors.email = emailValidate(values.email);
+        errors.password = passwordValidate(values.password);
 
-        errors.password = passwordValidate(values.password)
-        console.log(errors)
-
-        return errors.email || errors.password ? errors : {}
+        return errors.email || errors.password ? errors : {};
     };
 
     const formik = useFormik({
@@ -29,18 +27,23 @@ function LoginPage() {
         },
         validate,
         onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            await dispatch(authActions.login(values))
+            const res = await dispatch(authActions.login(values));
+            if (res.payload.error) {
+                const error = res.payload.error;
+                formikHelpers.setFieldError('password', error)
+            }
+            console.log(res)
         },
     });
 
     if (isLoggedIn) {
-        return <Navigate to={'/'}/>
+        return <Navigate to={'/'}/>;
     }
 
     return (
         <div className={s.LoginPage}>
             <h1 className={s.LoginPage_Header}>Login</h1>
-            <h3 className={s.LoginPage_NewAcc}>New to StyleScan?</h3>
+            <Link to={'/signup'} className={s.LoginPage_NewAcc}>New to StyleScan?</Link>
             <div className={s.LoginPage_Form}>
                 <form onSubmit={formik.handleSubmit}>
                     <div className={s.LoginPage_Form_Element}>

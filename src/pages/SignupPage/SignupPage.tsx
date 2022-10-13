@@ -1,9 +1,10 @@
 import React from 'react';
 import s from './SignupPage.module.css';
 import {FormikHelpers, useFormik} from "formik";
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {emailValidate, passwordConfirmValidate, passwordValidate, useAppDispatch} from "../../utils/utils";
 import {FormErrorType} from "../../app/types";
+import {authActions} from "../../app/authReducer";
 
 function SignupPage() {
     const dispatch = useAppDispatch();
@@ -27,18 +28,18 @@ function SignupPage() {
             passwordConfirmation: '',
         },
         validate,
-        onSubmit: (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            console.log(values)
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
             renderVerifyPage()
-            // const {email, password} = values;
-            // await dispatch(authActions.signup({email, password}))
+            const {email, password} = values;
+            const res = await dispatch(authActions.signup({email, password}));
+            console.log(res)
         },
     });
 
     return (
         <div className={s.LoginPage}>
             <h1 className={s.LoginPage_Header}>Signup</h1>
-            <h3 className={s.LoginPage_NewAcc}>Already have an account?</h3>
+            <Link to={'/login'} className={s.LoginPage_NewAcc}>Already have an account?</Link>
             <div className={s.LoginPage_Form}>
                 <form onSubmit={formik.handleSubmit}>
                     <div className={s.LoginPage_Form_Element}>

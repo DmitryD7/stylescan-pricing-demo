@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import s from './App.module.css';
 import PlansList from "./pages/PlansList/PlansList";
@@ -9,9 +9,17 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import VerifyingEmailPage from "./pages/VerifyingEmailPage/VerifyingEmailPage";
 import ResetPasswPage from "./pages/ResetPasswPage/ResetPasswPage";
+import AccountPage from "./pages/AccountPage/AccountPage";
+import {useAppDispatch} from "./utils/utils";
+import { appActions } from './app/appReducer';
 
 function App() {
+    const dispatch = useAppDispatch();
+    const {initializeApp} = appActions;
 
+    useEffect(() => {
+        dispatch(initializeApp());
+    }, []);
 
     return (
         <div className={s.Container}>
@@ -25,6 +33,7 @@ function App() {
                     <Route path={'signup'} element={<SignupPage/>}/>
                     <Route path={'verify'} element={<VerifyingEmailPage/>}/>
                     <Route path={'reset'} element={<ResetPasswPage/>}/>
+                    <Route path={'account'} element={<AccountPage/>}/>
                 </Routes>
             </div>
         </div>

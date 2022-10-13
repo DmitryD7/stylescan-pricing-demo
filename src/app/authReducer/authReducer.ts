@@ -1,27 +1,63 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType, SignupParamsType,} from "../../api/api";
+import {appActions} from "../applicationCommonActions";
 
-const login = createAsyncThunk('auth/login', async (params: LoginParamsType) => {
+const {setAppStatus, setAppError} = appActions
+
+const login = createAsyncThunk('auth/login', async (params: LoginParamsType, {dispatch}) => {
     try {
-        await authAPI.login(params);
+        dispatch(setAppStatus({status: 'loading'}));
+        const res = await authAPI.login(params);
+        if (res.data.ok === 1) {
+            dispatch(setAppStatus({status: 'succeeded'}));
+            return res.data.ok;
+        } else {
+            dispatch(setAppStatus({status: 'failed'}));
+            dispatch(setAppError({error: res.data.error}));
+            return {error: res.data.error}
+        }
     } catch (error) {
+        dispatch(setAppStatus({status: 'failed'}));
+        dispatch(setAppError({error: 'error'}));
         console.error(error)
     }
 })
 
-const logout = createAsyncThunk('auth/logout', async () => {
+const logout = createAsyncThunk('auth/logout', async (param, {dispatch}) => {
     try {
-        await authAPI.logout();
+        setAppStatus({status: 'loading'});
+        const res = await authAPI.logout();
+        if (res.data.ok === 1) {
+            dispatch(setAppStatus({status: 'succeeded'}));
+            return res.data.ok;
+        } else {
+            dispatch(setAppStatus({status: 'failed'}));
+            dispatch(setAppError({error: res.data.error}));
+            return {error: res.data.error};
+        }
     } catch (error) {
-        console.error(error)
+        dispatch(setAppStatus({status: 'failed'}));
+        dispatch(setAppError({error: 'error'}));
+        console.error(error);
     }
 })
 
-const signup = createAsyncThunk('auth/signup', async (params: SignupParamsType) => {
+const signup = createAsyncThunk('auth/signup', async (params: SignupParamsType, {dispatch}) => {
     try {
-        await authAPI.signUp(params);
+        setAppStatus({status: 'loading'});
+        const res = await authAPI.signUp(params);
+        if (res.data.ok === 1) {
+            dispatch(setAppStatus({status: 'succeeded'}));
+            return res.data.ok;
+        } else {
+            dispatch(setAppStatus({status: 'failed'}));
+            dispatch(setAppError({error: res.data.error}));
+            return {error: res.data.error};
+        }
     } catch (error) {
-        console.error(error)
+        dispatch(setAppStatus({status: 'failed'}));
+        dispatch(setAppError({error: 'error'}));
+        console.error(error);
     }
 })
 

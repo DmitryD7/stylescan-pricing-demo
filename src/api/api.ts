@@ -28,7 +28,7 @@ export const authAPI = {
     requestResetPassword(data: RequestResetPasswordType) {
         return instance.post('reset_request', data);
     },
-    refreshCookie() {
+    refresh() {
         return instance.get('refresh');
     },
 };

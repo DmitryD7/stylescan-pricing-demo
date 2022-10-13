@@ -9,3 +9,5 @@ export type FormErrorType = {
     password?: string | null
     passwordConfirmation?: string
 }
+
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
