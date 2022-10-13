@@ -62,7 +62,7 @@ function LoginPage() {
                             placeholder={'Password'}
                             {...formik.getFieldProps('password')}
                         />
-                        <div className={s.LoginPage_ForgotPasswBtn}><Link to={'/reset'}>Forgot password?</Link></div>
+                        <div className={s.LoginPage_ForgotPasswBtn}><Link to={'/reset_request'}>Forgot password?</Link></div>
                         {formik.errors.password ?
                             <div className={s.LoginPage_Form_Element_Error}>{formik.errors.password}</div> : null}
                     </div>

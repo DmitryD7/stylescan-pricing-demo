@@ -12,6 +12,7 @@ import ResetPasswPage from "./pages/ResetPasswPage/ResetPasswPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import {useAppDispatch} from "./utils/utils";
 import { appActions } from './app/appReducer';
+import ChangePasswPage from "./pages/ChangePasswPage/ChangePasswPage";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -32,7 +33,8 @@ function App() {
                     <Route path={'login'} element={<LoginPage/>}/>
                     <Route path={'signup'} element={<SignupPage/>}/>
                     <Route path={'verify'} element={<VerifyingEmailPage/>}/>
-                    <Route path={'reset'} element={<ResetPasswPage/>}/>
+                    <Route path={'reset_request'} element={<ResetPasswPage/>}/>
+                    <Route path={'reset_password'} element={<ChangePasswPage/>}/>
                     <Route path={'account'} element={<AccountPage/>}/>
                 </Routes>
             </div>
