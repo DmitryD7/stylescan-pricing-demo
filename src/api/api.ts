@@ -40,12 +40,12 @@ export type LoginParamsType = {
 
 export type SignupParamsType = LoginParamsType & { redirect?: string }
 
-type RequestResetPasswordType = {
+export type RequestResetPasswordType = {
     email: string,
     redirect?: string,
 }
 
-type ResetPasswordDataType = {
+export type ResetPasswordDataType = {
     code: string,
     password: string,
 }

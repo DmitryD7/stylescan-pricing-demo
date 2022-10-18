@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {authAPI, LoginParamsType, SignupParamsType,} from "../../api/api";
+import {authAPI, LoginParamsType, RequestResetPasswordType, SignupParamsType,} from "../../api/api";
 import {appActions} from "../applicationCommonActions";
 import {handleAsyncServerAppError, handleAsyncServerNetworkError, ThunkError} from "../../utils/errorUtils";
 
@@ -50,6 +50,21 @@ const signup = createAsyncThunk<undefined, SignupParamsType, ThunkError>('auth/s
     }
 })
 
+const requestResetPassword = createAsyncThunk<undefined, RequestResetPasswordType, ThunkError>('auth/request_reset', async (param, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatus({status: 'loading'}));
+    try {
+        const res = await authAPI.requestResetPassword(param);
+        if (res.status === 200) {
+            thunkAPI.dispatch(setAppStatus({status: 'succeeded'}));
+            return res.data.ok;
+        } else {
+            return handleAsyncServerAppError(res.data, thunkAPI);
+        }
+    } catch (error: unknown | any) {
+        return handleAsyncServerNetworkError(error, thunkAPI);
+    }
+})
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState: {
@@ -76,4 +91,5 @@ export const authAsyncActions = {
     login,
     logout,
     signup,
+    requestResetPassword,
 }

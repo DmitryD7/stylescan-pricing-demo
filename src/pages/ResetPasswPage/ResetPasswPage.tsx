@@ -1,10 +1,17 @@
 import React from 'react';
 import s from './ResetPasswPage.module.css';
-import {emailValidate} from "../../utils/utils";
+import {emailValidate, useAppDispatch} from "../../utils/utils";
 import {FormErrorType} from "../../app/types";
-import {useFormik} from "formik";
+import {FormikHelpers, useFormik} from "formik";
+import {authActions} from "../../app/authReducer";
+import {useNavigate} from "react-router-dom";
 
 function ResetPasswPage() {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const renderLoginPage = () => navigate('/login');
+
     const validate = (values: FormValuesType) => {
         const errors: FormErrorType = {};
         errors.email = emailValidate(values.email);
@@ -16,8 +23,14 @@ function ResetPasswPage() {
             email: '',
         },
         validate,
-        onSubmit: (values) => {
-            console.log(values)
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
+           const res = await dispatch(authActions.requestResetPassword(values));
+            if (res.payload?.error) {
+                const error = res.payload.error;
+                formikHelpers.setFieldError('email', error);
+            } else {
+                renderLoginPage();
+            }
         },
     });
 
