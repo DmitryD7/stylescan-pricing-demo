@@ -29,10 +29,14 @@ function SignupPage() {
         },
         validate,
         onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            renderVerifyPage()
             const {email, password} = values;
             const res = await dispatch(authActions.signup({email, password}));
-            console.log(res)
+            if (res.payload?.error) {
+                const error = res.payload.error;
+                formikHelpers.setFieldError('email', error);
+            } else {
+                renderVerifyPage()
+            }
         },
     });
 

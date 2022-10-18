@@ -1,63 +1,52 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, LoginParamsType, SignupParamsType,} from "../../api/api";
 import {appActions} from "../applicationCommonActions";
+import {handleAsyncServerAppError, handleAsyncServerNetworkError, ThunkError} from "../../utils/errorUtils";
 
-const {setAppStatus, setAppError} = appActions
+const {setAppStatus} = appActions
 
-const login = createAsyncThunk('auth/login', async (params: LoginParamsType, {dispatch}) => {
+const login = createAsyncThunk<undefined, LoginParamsType, ThunkError>('auth/login', async (params, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatus({status: 'loading'}));
     try {
-        dispatch(setAppStatus({status: 'loading'}));
         const res = await authAPI.login(params);
         if (res.data.ok === 1) {
-            dispatch(setAppStatus({status: 'succeeded'}));
+            thunkAPI.dispatch(setAppStatus({status: 'succeeded'}));
             return res.data.ok;
         } else {
-            dispatch(setAppStatus({status: 'failed'}));
-            dispatch(setAppError({error: res.data.error}));
-            return {error: res.data.error}
+            return handleAsyncServerAppError(res.data, thunkAPI);
         }
-    } catch (error) {
-        dispatch(setAppStatus({status: 'failed'}));
-        dispatch(setAppError({error: 'error'}));
-        console.error(error)
+    } catch (error: unknown | any) {
+        return handleAsyncServerNetworkError(error, thunkAPI);
     }
 })
 
-const logout = createAsyncThunk('auth/logout', async (param, {dispatch}) => {
+const logout = createAsyncThunk('auth/logout', async (param, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatus({status: 'loading'}));
     try {
-        setAppStatus({status: 'loading'});
         const res = await authAPI.logout();
-        if (res.data.ok === 1) {
-            dispatch(setAppStatus({status: 'succeeded'}));
+        if (res.status === 200) {
+            thunkAPI.dispatch(setAppStatus({status: 'succeeded'}));
             return res.data.ok;
         } else {
-            dispatch(setAppStatus({status: 'failed'}));
-            dispatch(setAppError({error: res.data.error}));
-            return {error: res.data.error};
+            return handleAsyncServerAppError(res.data, thunkAPI);
         }
-    } catch (error) {
-        dispatch(setAppStatus({status: 'failed'}));
-        dispatch(setAppError({error: 'error'}));
-        console.error(error);
+    } catch (error: unknown | any) {
+        return handleAsyncServerNetworkError(error, thunkAPI);
     }
 })
 
-const signup = createAsyncThunk('auth/signup', async (params: SignupParamsType, {dispatch}) => {
+const signup = createAsyncThunk<undefined, SignupParamsType, ThunkError>('auth/signup', async (params, thunkAPI) => {
+    setAppStatus({status: 'loading'});
     try {
-        setAppStatus({status: 'loading'});
         const res = await authAPI.signUp(params);
         if (res.data.ok === 1) {
-            dispatch(setAppStatus({status: 'succeeded'}));
+            thunkAPI.dispatch(setAppStatus({status: 'succeeded'}));
             return res.data.ok;
         } else {
-            dispatch(setAppStatus({status: 'failed'}));
-            dispatch(setAppError({error: res.data.error}));
-            return {error: res.data.error};
+            return handleAsyncServerAppError(res.data, thunkAPI);
         }
-    } catch (error) {
-        dispatch(setAppStatus({status: 'failed'}));
-        dispatch(setAppError({error: 'error'}));
-        console.error(error);
+    } catch (error: unknown | any) {
+        return handleAsyncServerNetworkError(error, thunkAPI);
     }
 })
 
@@ -72,8 +61,10 @@ export const authSlice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(login.fulfilled, (state) => {
-            state.isLoggedIn = true;
+        builder.addCase(login.fulfilled, (state, action) => {
+            if (action.payload === 1) {
+                state.isLoggedIn = true;
+            }
         });
         builder.addCase(logout.fulfilled, (state) => {
             state.isLoggedIn = false;

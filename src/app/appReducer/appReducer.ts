@@ -14,7 +14,6 @@ const initializeApp = createAsyncThunk('app/initializeApp', async (params, {disp
     } else {
         dispatch(setIsLoggedIn({value: false}))
     }
-    console.log(res)
 });
 
 export const appSlice = createSlice({
