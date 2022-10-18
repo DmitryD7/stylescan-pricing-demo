@@ -10,7 +10,7 @@ function ResetPasswPage() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const renderLoginPage = () => navigate('/login');
+    const renderChangePasswordPage = () => navigate('/reset_password');
 
     const validate = (values: FormValuesType) => {
         const errors: FormErrorType = {};
@@ -29,7 +29,7 @@ function ResetPasswPage() {
                 const error = res.payload.error;
                 formikHelpers.setFieldError('email', error);
             } else {
-                renderLoginPage();
+                renderChangePasswordPage();
             }
         },
     });
