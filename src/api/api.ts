@@ -29,7 +29,10 @@ export const authAPI = {
         return instance.post('reset_request', data);
     },
     refresh() {
-        return instance.get('refresh');
+        return instance.post('refresh');
+    },
+    debug() {
+        return instance.get('debug.json');
     },
 };
 

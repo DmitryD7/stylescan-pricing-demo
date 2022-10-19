@@ -11,7 +11,7 @@ import VerifyingEmailPage from "./pages/VerifyingEmailPage/VerifyingEmailPage";
 import ResetPasswPage from "./pages/ResetPasswPage/ResetPasswPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import {useAppDispatch} from "./utils/utils";
-import { appActions } from './app/appReducer';
+import {appActions} from './app/appReducer';
 import ChangePasswPage from "./pages/ChangePasswPage/ChangePasswPage";
 
 function App() {

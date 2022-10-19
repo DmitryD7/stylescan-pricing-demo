@@ -3,16 +3,23 @@ import {RequestStatusType} from "../types";
 import {authActions} from "../authReducer";
 import {appActions} from "../applicationCommonActions";
 import {authAPI} from "../../api/api";
+import {handleAsyncServerAppError, handleAsyncServerNetworkError, ThunkError} from "../../utils/errorUtils";
 
 const {setIsLoggedIn} = authActions;
 const {setAppStatus, setAppError} = appActions;
 
-const initializeApp = createAsyncThunk('app/initializeApp', async (params, {dispatch}) => {
-    const res = await authAPI.refresh();
-    if (res.data.resultCode === 0) {
-        dispatch(setIsLoggedIn({value: true}));
-    } else {
-        dispatch(setIsLoggedIn({value: false}))
+const initializeApp = createAsyncThunk<undefined, undefined, ThunkError>('app/initializeApp', async (params, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatus({status: 'loading'}));
+    try {
+        const res = await authAPI.refresh();
+        if (res.data.ok === 1) {
+            thunkAPI.dispatch(setIsLoggedIn({value: true}));
+        } else {
+            thunkAPI.dispatch(setIsLoggedIn({value: false}));
+            return handleAsyncServerAppError(res.data, thunkAPI);
+        }
+    } catch (error: unknown | any) {
+        return handleAsyncServerNetworkError(error, thunkAPI);
     }
 });
 
