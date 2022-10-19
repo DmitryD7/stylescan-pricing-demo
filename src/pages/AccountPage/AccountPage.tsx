@@ -6,11 +6,14 @@ import {Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectAccEmail} from "../../app/accountReducer";
 import {debug} from "../../app/accountReducer/accountReducer";
+import {selectStatus} from "../../app/appReducer";
+import {Loader} from "../../components/Loader/Loader";
 
 function AccountPage() {
     const dispatch = useAppDispatch();
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const accEmail = useSelector(selectAccEmail);
+    const status = useSelector(selectStatus);
 
     useEffect(() => {
         dispatch(debug());
@@ -28,6 +31,9 @@ function AccountPage() {
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
+    }
+    if (status === "loading") {
+        return <Loader/>
     }
 
     return (

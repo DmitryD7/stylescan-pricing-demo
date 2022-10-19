@@ -13,6 +13,7 @@ const initializeApp = createAsyncThunk<undefined, undefined, ThunkError>('app/in
     try {
         const res = await authAPI.refresh();
         if (res.data.ok === 1) {
+            thunkAPI.dispatch(setAppStatus({status: 'succeeded'}));
             thunkAPI.dispatch(setIsLoggedIn({value: true}));
         } else {
             thunkAPI.dispatch(setIsLoggedIn({value: false}));

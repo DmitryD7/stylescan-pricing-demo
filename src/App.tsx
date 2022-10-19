@@ -22,11 +22,15 @@ function App() {
         dispatch(initializeApp());
     }, []);
 
+    // if (status === "loading") {
+    //     return <Loader/>
+    // }
+
     return (
         <div className={s.Container}>
             <div className={s.App}>
                 <Header/>
-                <Routes>
+                {<Routes>
                     <Route index element={<PlansList/>}/>
                     <Route path={'success'} element={<SuccessPage/>}/>
                     <Route path={'cancel'} element={<CancellationPage/>}/>
@@ -36,7 +40,7 @@ function App() {
                     <Route path={'reset_request'} element={<ResetPasswPage/>}/>
                     <Route path={'reset_password'} element={<ChangePasswPage/>}/>
                     <Route path={'account'} element={<AccountPage/>}/>
-                </Routes>
+                </Routes>}
             </div>
         </div>
     );

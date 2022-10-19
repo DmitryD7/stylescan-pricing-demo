@@ -5,10 +5,14 @@ import {Link, useNavigate} from 'react-router-dom';
 import {emailValidate, passwordConfirmValidate, passwordValidate, useAppDispatch} from "../../utils/utils";
 import {FormErrorType} from "../../app/types";
 import {authActions} from "../../app/authReducer";
+import {useSelector} from "react-redux";
+import {selectStatus} from "../../app/appReducer";
+import {Loader} from "../../components/Loader/Loader";
 
 function SignupPage() {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const status = useSelector(selectStatus);
 
     const validate = (values: FormValuesType) => {
         const errors: FormErrorType = {};
@@ -39,6 +43,10 @@ function SignupPage() {
             }
         },
     });
+
+    if (status === "loading") {
+        return <Loader/>
+    }
 
     return (
         <div className={s.LoginPage}>

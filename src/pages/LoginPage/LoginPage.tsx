@@ -7,9 +7,12 @@ import {Link, Navigate} from 'react-router-dom';
 import {emailValidate, passwordValidate, useAppDispatch} from "../../utils/utils";
 import {LoginParamsType} from "../../api/api";
 import {FormErrorType} from "../../app/types";
+import {selectStatus} from "../../app/appReducer";
+import {Loader} from "../../components/Loader/Loader";
 
 function LoginPage() {
     const isLoggedIn = useSelector(selectIsLoggedIn);
+    const status = useSelector(selectStatus);
     const dispatch = useAppDispatch();
 
     const validate = (values: LoginParamsType) => {
@@ -37,6 +40,9 @@ function LoginPage() {
 
     if (isLoggedIn) {
         return <Navigate to={'/'}/>;
+    }
+    if (status === "loading") {
+        return <Loader/>
     }
 
     return (
