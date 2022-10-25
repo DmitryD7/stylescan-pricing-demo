@@ -10,6 +10,7 @@ function Header() {
 
     return (
         <div className={s.Header}>
+            <div><a href="https://billing.stripe.com/p/login/test_7sI6rD4lT672bPGbII">Stripe</a></div>
             <div>
                 <Link to={'/'}>
                     <img src={styleScanLogo} alt="StyleScan Logo" className={s.Header_StyleScanIco}/>
