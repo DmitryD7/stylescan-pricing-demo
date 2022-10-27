@@ -2,18 +2,23 @@ import React, {useEffect} from 'react';
 import s from './AccountPage.module.css';
 import {useAppDispatch} from "../../utils/utils";
 import {authActions, selectIsLoggedIn} from "../../app/authReducer";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {selectAccEmail} from "../../app/accountReducer";
-import {debug} from "../../app/accountReducer/accountReducer";
+import {accountActions, accSelectors} from "../../app/accountReducer";
 import {selectStatus} from "../../app/appReducer";
 import {Loader} from "../../components/Loader/Loader";
+import Button from "../../components/Button/Button";
 
 function AccountPage() {
     const dispatch = useAppDispatch();
     const isLoggedIn = useSelector(selectIsLoggedIn);
-    const accEmail = useSelector(selectAccEmail);
     const status = useSelector(selectStatus);
+
+    const {selectCurrentPlan, selectAccEmail} = accSelectors;
+    const accEmail = useSelector(selectAccEmail);
+    const currentPlan = useSelector(selectCurrentPlan)
+
+    const {debug} = accountActions;
 
     useEffect(() => {
         dispatch(debug());
@@ -29,6 +34,10 @@ function AccountPage() {
 
     const onChangePasswordHandler = () => console.log('change password');
 
+    const onUpgradePlanHandler = () => console.log('onUpgradePlanHandler');
+    const onCancelPlanHandler = () => console.log('onCancelPlanHandler');
+
+
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }
@@ -38,18 +47,46 @@ function AccountPage() {
 
     return (
         <div className={s.AccountPage}>
-            <h1>Welcome to your account!</h1>
-            <h3>Your email: {accEmail}</h3>
+            <h1>Hello {accEmail}!</h1>
+            <div className={s.AccountPage_Data}>
+                <section className={s.AccountPage_PlanInfo}>
+                    <h3>Your Current Plan: {currentPlan}</h3>
+                    {currentPlan === 'basic' || currentPlan === 'entry'
+                        ? <button onClick={onUpgradePlanHandler} className={s.Btn}>Upgrade plan</button>
+                        : null
+                    }
+                    <button onClick={onCancelPlanHandler} className={s.Btn}>Cancel plan</button>
+                    <button className={`${s.Btn} ${s.Btn_WithLink}`}>
+                        <a href="https://billing.stripe.com/p/login/test_7sI6rD4lT672bPGbII">Stripe Manage</a>
+                    </button>
+                    <ButtonMailto />
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi debitis eaque eum eveniet harum hic,
-                ipsam molestias nam nemo neque nesciunt nihil numquam omnis perferendis, perspiciatis quam quas quia
-                quis quo quod ratione vitae! </p>
+                </section>
 
-            <button onClick={onChangePasswordHandler}>Change Password</button>
-
-            <button onClick={onLogoutHandler}>Logout</button>
+                <section className={s.AccountPage_Settings}>
+                    <h3>Account settings</h3>
+                    <button onClick={onChangePasswordHandler} className={s.Btn}>Change Password</button>
+                    <button onClick={onLogoutHandler} className={s.Btn}>Logout</button>
+                </section>
+            </div>
         </div>
     );
 }
 
 export default AccountPage;
+
+const ButtonMailto = () => {
+    return (
+        <button className={`${s.Btn} ${s.Btn_WithLink}`}>
+            <Link
+                to='#'
+                onClick={(e) => {
+                    window.location.href = "mailto:info@stylescan.com";
+                    e.preventDefault();
+                }}
+            >
+                Contact Us
+            </Link>
+        </button>
+    );
+};

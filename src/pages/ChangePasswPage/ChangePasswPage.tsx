@@ -1,10 +1,9 @@
 import React from 'react';
 import s from './ChangePasswPage.module.css';
 import {FormikHelpers, useFormik} from "formik";
-import {Link, useNavigate} from 'react-router-dom';
-import {emailValidate, passwordConfirmValidate, passwordValidate, useAppDispatch} from "../../utils/utils";
+import {useNavigate} from 'react-router-dom';
+import {passwordConfirmValidate, passwordValidate, useAppDispatch} from "../../utils/utils";
 import {FormErrorType} from "../../app/types";
-import {authActions} from "../../app/authReducer";
 
 function ChangePasswPage() {
     const dispatch = useAppDispatch();
@@ -45,7 +44,8 @@ function ChangePasswPage() {
                             {...formik.getFieldProps('confirmCode')}
                         />
                         {formik.errors.confirmCode ?
-                            <div className={s.ChangePasswPage_Form_Element_Error}>{formik.errors.confirmCode}</div> : null}
+                            <div
+                                className={s.ChangePasswPage_Form_Element_Error}>{formik.errors.confirmCode}</div> : null}
                     </div>
 
                     <div className={s.ChangePasswPage_Form_Element}>

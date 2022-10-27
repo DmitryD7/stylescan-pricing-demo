@@ -6,9 +6,12 @@ import mostPopularIco from '../../assets/Vector.svg'
 import Button from "../Button/Button";
 
 function PlanCard(props: PlanCardPropsType) {
-    const {title, priceUI, description, isMostPopular, isDisabledButton, onBuyClick, price, quantity} = props;
+    const {title, priceUI, description, isMostPopular, isDisabledButton, onBuyClick, price, quantity, setCurrentPlan} = props;
 
-    const onClickHandler = () => onBuyClick({price, quantity});
+    const onClickHandler = () => {
+        onBuyClick({price, quantity});
+        setCurrentPlan(title);
+    }
 
     const ButtonMailto = () => {
         return (
@@ -56,6 +59,7 @@ function PlanCard(props: PlanCardPropsType) {
 type PlanCardPropsType = IPlan & {
     isDisabledButton: boolean
     onBuyClick: (item: { price: string, quantity: number }) => void
+    setCurrentPlan: (currentPlan: string) => void
 }
 
 export default PlanCard;

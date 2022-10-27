@@ -4,6 +4,9 @@ import {plans} from "../../assets/plans";
 import PlanCard from "../../components/PlanCard/PlanCard";
 import PlansDescription from "../../components/PlansDescription/PlansDescription";
 import {loadStripe} from "@stripe/stripe-js";
+import {appActions} from "../../app/appReducer";
+import {useAppDispatch} from "../../utils/utils";
+import {accountActions} from "../../app/accountReducer";
 
 let stripePromise: any;
 
@@ -19,8 +22,12 @@ function PlansList() {
     const [stripeError, setStripeError] = useState(null);
     const [isLoading, setLoading] = useState(false);
 
+    const dispatch = useAppDispatch();
+    const {setCurrentPlan} = accountActions;
 
-    const redirectToCheckout = async (item: { price: string, quantity: number }) => {
+    const setCurrentPlanHandler = (currentPlan: string) => dispatch(setCurrentPlan({currentPlan}));
+
+    const redirectToCheckout = async (item: { price: string, quantity: number}) => {
         const checkoutOptions = {
             lineItems: [item],
             mode: 'subscription',
@@ -29,10 +36,10 @@ function PlansList() {
         };
 
         setLoading(true);
-        console.log("redirectToCheckout");
 
         const stripe = await getStripe();
         const {error} = await stripe.redirectToCheckout(checkoutOptions);
+        //dispatch(setCurrentPlan({currentPlan: item.title}))
         console.log("Stripe checkout error", error);
 
         if (error) setStripeError(error.message);
@@ -53,6 +60,7 @@ function PlansList() {
                     isMostPopular={plan.isMostPopular}
                     isDisabledButton={isLoading}
                     onBuyClick={redirectToCheckout}
+                    setCurrentPlan={setCurrentPlanHandler}
                     quantity={plan.quantity}
                     priceUI={plan.priceUI}
                 />)}

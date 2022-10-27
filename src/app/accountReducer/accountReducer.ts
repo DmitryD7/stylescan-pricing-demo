@@ -1,11 +1,11 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI} from "../../api/api";
 import {handleAsyncServerAppError, handleAsyncServerNetworkError} from "../../utils/errorUtils";
 import {appActions} from "../applicationCommonActions";
 
 const {setAppStatus} = appActions;
 
-export const debug = createAsyncThunk('auth/debug', async (param, thunkAPI) => {
+const debug = createAsyncThunk('auth/debug', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.debug();
@@ -24,11 +24,18 @@ export const accountSlice = createSlice({
     name: 'account',
     initialState: {
         email: '',
+        currentPlan: 'entry',
     },
-    reducers: {},
+    reducers: {
+        setCurrentPlan: (state, action: PayloadAction<{ currentPlan: string }>) => {
+            state.currentPlan = action.payload.currentPlan;
+        }
+    },
     extraReducers: builder => {
         builder.addCase(debug.fulfilled, (state, action) => {
             state.email = action.payload;
         });
     },
 });
+
+export const accountAsync = {debug};

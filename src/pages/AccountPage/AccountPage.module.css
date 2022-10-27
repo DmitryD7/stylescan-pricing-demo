@@ -1,2 +1,36 @@
 .AccountPage {
+    margin-top: 17px;
+    text-align: start;
+}
+
+.AccountPage_Data {
+    margin-top: 27px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.AccountPage_Settings {}
+
+.AccountPage_PlanInfo {
+
+}
+
+.Btn {
+    width: 100%;
+    padding: 19px 0;
+    margin-top: 19px;
+    border: none;
+    background-color: #0f0f0f;
+    color: #fff;
+    font-size: 18px;
+}
+
+.Btn:hover {
+    cursor: pointer;
+    background-color: #3b3b3b;
+}
+
+.Btn_WithLink a{
+    text-decoration: none;
+    color: inherit;
 }
