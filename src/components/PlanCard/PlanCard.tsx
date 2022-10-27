@@ -1,17 +1,26 @@
 import React from 'react';
 import s from './PlanCard.module.css';
 import {IPlan} from "../../assets/plans";
-import {Link} from 'react-router-dom';
+import {Link, Navigate, useNavigate} from 'react-router-dom';
 import mostPopularIco from '../../assets/Vector.svg'
 import Button from "../Button/Button";
 import {CurrentPlanType} from "../../app/accountReducer/accountReducer";
+import {useAppDispatch} from "../../utils/utils";
+import {accountActions} from "../../app/accountReducer";
 
 function PlanCard(props: PlanCardPropsType) {
     const {title, priceUI, description, isMostPopular, isDisabledButton, onBuyClick, price, quantity, setCurrentPlan} = props;
+    const dispatch = useAppDispatch();
+    const {setIsEnterprisePending} = accountActions;
+    const navigate = useNavigate();
 
     const onClickHandler = () => {
         onBuyClick({price, quantity});
         setCurrentPlan(title as CurrentPlanType);
+    }
+    const onEnterpriseClick = () => {
+        dispatch(setIsEnterprisePending({isEnterprisePending: true}))
+        navigate('/enterprisePending')
     }
 
     const ButtonMailto = () => {
@@ -22,6 +31,7 @@ function PlanCard(props: PlanCardPropsType) {
                     onClick={(e) => {
                         window.location.href = "mailto:info@stylescan.com";
                         e.preventDefault();
+                        onEnterpriseClick()
                     }}
                 >
                     {isDisabledButton ? 'Loading...' : 'Contact Us'}

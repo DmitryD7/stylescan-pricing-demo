@@ -6,6 +6,7 @@ const {debug, setCurrentPlan} = accountActions;
 export type InitialStateType = {
     email: string,
     currentPlan: CurrentPlanType,
+    isEnterprisePending: boolean,
 }
 
 let startState: InitialStateType;
@@ -13,7 +14,8 @@ let startState: InitialStateType;
 beforeEach(() => {
     startState = {
         email: 'dd@gmail.com',
-        currentPlan: 'Basic'
+        currentPlan: 'Basic',
+        isEnterprisePending: false
     }
 });
 

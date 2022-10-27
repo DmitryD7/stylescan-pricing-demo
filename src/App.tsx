@@ -16,12 +16,12 @@ import ChangePasswPage from "./pages/ChangePasswPage/ChangePasswPage";
 import ChangePlanPage from "./pages/ChangePlanPage/ChangePlanPage";
 import {useSelector} from "react-redux";
 import {accSelectors} from "./app/accountReducer";
+import EnterprisePendingPage from './pages/EnterprisePendingPage/EnterprisePendingPage';
 
 function App() {
     const dispatch = useAppDispatch();
     const {initializeApp} = appActions;
     const currentPlan = useSelector(accSelectors.selectCurrentPlan);
-    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(initializeApp());
@@ -29,10 +29,6 @@ function App() {
 
     // if (status === "loading") {
     //     return <Loader/>
-    // }
-
-    // if (currentPlan === '') {
-    //     navigate('plans')
     // }
 
     const StartPage = () => currentPlan === '' ? <PlansList/> : <AccountPage/>
@@ -53,6 +49,7 @@ function App() {
                     <Route path={'reset_password'} element={<ChangePasswPage/>}/>
                     <Route path={'account'} element={<AccountPage/>}/>
                     <Route path={'changePlan'} element={<ChangePlanPage currentPlan={currentPlan}/>}/>
+                    <Route path={'enterprisePending'} element={<EnterprisePendingPage/>}/>
                 </Routes>
             </div>
         </div>

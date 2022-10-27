@@ -25,11 +25,15 @@ export const accountSlice = createSlice({
     initialState: {
         email: '',
         currentPlan: 'Basic' as CurrentPlanType,
+        isEnterprisePending: false,
     },
     reducers: {
         setCurrentPlan: (state, action: PayloadAction<{ currentPlan: CurrentPlanType }>) => {
             state.currentPlan = action.payload.currentPlan;
-        }
+        },
+        setIsEnterprisePending: (state, action: PayloadAction<{ isEnterprisePending: boolean }>) => {
+            state.isEnterprisePending = action.payload.isEnterprisePending;
+        },
     },
     extraReducers: builder => {
         builder.addCase(debug.fulfilled, (state, action) => {
