@@ -7,9 +7,12 @@
     width: 110px;
 }
 
-.Header_Account {
+.Header_Account {}
 
+.Header_Account a:nth-child(1) {
+    margin-right: 17px;
 }
+
 .Header_Account a {
     text-decoration: none;
     color: #0f0f0f;

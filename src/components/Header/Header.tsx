@@ -16,6 +16,7 @@ function Header() {
                 </Link>
             </div>
             <div className={s.Header_Account}>
+                <Link to={'plans'}>Plans</Link>
                 {isLoggedIn
                     ? <Link to={'account'}>Account</Link>
                     : <Link to={'login'}>Login</Link>

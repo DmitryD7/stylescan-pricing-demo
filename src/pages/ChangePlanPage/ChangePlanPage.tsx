@@ -1,5 +1,5 @@
 import React from "react";
-import s from './PlansList.module.css';
+import s from './ChangePlanPage.module.css';
 import {plans} from "../../assets/plans";
 import PlanCard from "../../components/PlanCard/PlanCard";
 import PlansDescription from "../../components/PlansDescription/PlansDescription";
@@ -10,7 +10,8 @@ import {useSelector} from "react-redux";
 import {selectStatus} from "../../app/appReducer";
 import {CurrentPlanType} from "../../app/accountReducer/accountReducer";
 
-function PlansList() {
+function ChangePlanPage(props: ChangePlanPropsType) {
+    const {currentPlan} = props;
     const status = useSelector(selectStatus);
     const dispatch = useAppDispatch();
     const {setCurrentPlan} = accountActions;
@@ -21,12 +22,14 @@ function PlansList() {
 
     const redirectToCheckoutHandler = redirectToCheckout(dispatch);
 
+    const availablePlans = plans.filter(plan => plan.title !== currentPlan);;
+
 
     return (
         <>
             <h1 className={s.Header}>Choose the subscription that works for you</h1>
             <section className={s.PlansList}>
-                {plans.map(plan => <PlanCard
+                {availablePlans.map(plan => <PlanCard
                     key={plan.price}
                     title={plan.title}
                     price={plan.price}
@@ -44,4 +47,8 @@ function PlansList() {
     );
 }
 
-export default PlansList;
+export default ChangePlanPage;
+
+type ChangePlanPropsType = {
+    currentPlan: CurrentPlanType
+}

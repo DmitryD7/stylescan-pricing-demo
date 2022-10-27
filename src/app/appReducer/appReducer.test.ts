@@ -1,4 +1,4 @@
-import { appActions } from "../applicationCommonActions"
+import { appCommonActions } from "../applicationCommonActions"
 import { RequestStatusType } from "../types"
 import {appReducer} from "./index";
 
@@ -9,7 +9,7 @@ export type InitialStateType = {
 }
 
 let startState: InitialStateType;
-const {setAppStatus, setAppError} = appActions;
+const {setAppStatus, setAppError} = appCommonActions;
 
 beforeEach(() => {
     startState = {

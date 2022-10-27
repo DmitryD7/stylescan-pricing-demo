@@ -1,9 +1,9 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI} from "../../api/api";
 import {handleAsyncServerAppError, handleAsyncServerNetworkError} from "../../utils/errorUtils";
-import {appActions} from "../applicationCommonActions";
+import {appCommonActions} from "../applicationCommonActions";
 
-const {setAppStatus} = appActions;
+const {setAppStatus} = appCommonActions;
 
 const debug = createAsyncThunk('auth/debug', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}));
@@ -24,10 +24,10 @@ export const accountSlice = createSlice({
     name: 'account',
     initialState: {
         email: '',
-        currentPlan: 'entry',
+        currentPlan: 'Basic' as CurrentPlanType,
     },
     reducers: {
-        setCurrentPlan: (state, action: PayloadAction<{ currentPlan: string }>) => {
+        setCurrentPlan: (state, action: PayloadAction<{ currentPlan: CurrentPlanType }>) => {
             state.currentPlan = action.payload.currentPlan;
         }
     },
@@ -39,3 +39,5 @@ export const accountSlice = createSlice({
 });
 
 export const accountAsync = {debug};
+
+export type CurrentPlanType = 'Entry' | 'Basic' | 'Enterprise' | '';

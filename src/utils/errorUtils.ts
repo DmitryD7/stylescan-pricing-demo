@@ -1,7 +1,7 @@
-import {appActions} from "../app/applicationCommonActions"
+import {appCommonActions} from "../app/applicationCommonActions"
 import {AxiosError} from "axios";
 
-const {setAppError, setAppStatus} = appActions
+const {setAppError, setAppStatus} = appCommonActions
 
 export const handleAsyncServerAppError = <T>(data: any, thunkAPI: ThunkAPIType) => {
     thunkAPI.dispatch(setAppError({error: data.error.length ? data.error : 'Some error occurred'}))

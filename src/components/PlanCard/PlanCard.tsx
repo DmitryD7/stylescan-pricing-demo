@@ -4,13 +4,14 @@ import {IPlan} from "../../assets/plans";
 import {Link} from 'react-router-dom';
 import mostPopularIco from '../../assets/Vector.svg'
 import Button from "../Button/Button";
+import {CurrentPlanType} from "../../app/accountReducer/accountReducer";
 
 function PlanCard(props: PlanCardPropsType) {
     const {title, priceUI, description, isMostPopular, isDisabledButton, onBuyClick, price, quantity, setCurrentPlan} = props;
 
     const onClickHandler = () => {
         onBuyClick({price, quantity});
-        setCurrentPlan(title);
+        setCurrentPlan(title as CurrentPlanType);
     }
 
     const ButtonMailto = () => {
@@ -59,7 +60,7 @@ function PlanCard(props: PlanCardPropsType) {
 type PlanCardPropsType = IPlan & {
     isDisabledButton: boolean
     onBuyClick: (item: { price: string, quantity: number }) => void
-    setCurrentPlan: (currentPlan: string) => void
+    setCurrentPlan: (currentPlan: CurrentPlanType) => void
 }
 
 export default PlanCard;

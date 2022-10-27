@@ -1,12 +1,12 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {RequestStatusType} from "../types";
 import {authActions} from "../authReducer";
-import {appActions} from "../applicationCommonActions";
+import {appCommonActions} from "../applicationCommonActions";
 import {authAPI} from "../../api/api";
 import {handleAsyncServerAppError, handleAsyncServerNetworkError, ThunkError} from "../../utils/errorUtils";
 
 const {setIsLoggedIn} = authActions;
-const {setAppStatus, setAppError} = appActions;
+const {setAppStatus, setAppError} = appCommonActions;
 
 const initializeApp = createAsyncThunk<undefined, undefined, ThunkError>('app/initializeApp', async (params, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}));

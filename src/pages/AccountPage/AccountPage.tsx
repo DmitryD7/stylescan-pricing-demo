@@ -2,17 +2,18 @@ import React, {useEffect} from 'react';
 import s from './AccountPage.module.css';
 import {useAppDispatch} from "../../utils/utils";
 import {authActions, selectIsLoggedIn} from "../../app/authReducer";
-import {Link, Navigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {accountActions, accSelectors} from "../../app/accountReducer";
 import {selectStatus} from "../../app/appReducer";
 import {Loader} from "../../components/Loader/Loader";
-import Button from "../../components/Button/Button";
 
 function AccountPage() {
     const dispatch = useAppDispatch();
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const status = useSelector(selectStatus);
+
+    const navigate = useNavigate();
 
     const {selectCurrentPlan, selectAccEmail} = accSelectors;
     const accEmail = useSelector(selectAccEmail);
@@ -34,7 +35,7 @@ function AccountPage() {
 
     const onChangePasswordHandler = () => console.log('change password');
 
-    const onUpgradePlanHandler = () => console.log('onUpgradePlanHandler');
+    const onUpgradePlanHandler = () => navigate('/changePlan')
     const onCancelPlanHandler = () => console.log('onCancelPlanHandler');
 
 
@@ -51,11 +52,14 @@ function AccountPage() {
             <div className={s.AccountPage_Data}>
                 <section className={s.AccountPage_PlanInfo}>
                     <h3>Your Current Plan: {currentPlan}</h3>
-                    {currentPlan === 'basic' || currentPlan === 'entry'
+                    {currentPlan === 'Basic' || currentPlan === 'Entry'
                         ? <button onClick={onUpgradePlanHandler} className={s.Btn}>Upgrade plan</button>
                         : null
                     }
-                    <button onClick={onCancelPlanHandler} className={s.Btn}>Cancel plan</button>
+                    {/*<button onClick={onCancelPlanHandler} className={s.Btn}>Cancel plan</button>*/}
+                    <button className={`${s.Btn} ${s.Btn_WithLink}`}>
+                        <a href="https://billing.stripe.com/p/login/test_7sI6rD4lT672bPGbII">Cancel plan</a>
+                    </button>
                     <button className={`${s.Btn} ${s.Btn_WithLink}`}>
                         <a href="https://billing.stripe.com/p/login/test_7sI6rD4lT672bPGbII">Stripe Manage</a>
                     </button>

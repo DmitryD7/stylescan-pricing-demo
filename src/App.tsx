@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import s from './App.module.css';
 import PlansList from "./pages/PlansList/PlansList";
 import SuccessPage from "./pages/SuccessPage/SuccessPage";
@@ -13,10 +13,15 @@ import AccountPage from "./pages/AccountPage/AccountPage";
 import {useAppDispatch} from "./utils/utils";
 import {appActions} from './app/appReducer';
 import ChangePasswPage from "./pages/ChangePasswPage/ChangePasswPage";
+import ChangePlanPage from "./pages/ChangePlanPage/ChangePlanPage";
+import {useSelector} from "react-redux";
+import {accSelectors} from "./app/accountReducer";
 
 function App() {
     const dispatch = useAppDispatch();
     const {initializeApp} = appActions;
+    const currentPlan = useSelector(accSelectors.selectCurrentPlan);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(initializeApp());
@@ -26,12 +31,19 @@ function App() {
     //     return <Loader/>
     // }
 
+    // if (currentPlan === '') {
+    //     navigate('plans')
+    // }
+
+    const StartPage = () => currentPlan === '' ? <PlansList/> : <AccountPage/>
+
     return (
         <div className={s.Container}>
             <div className={s.App}>
                 <Header/>
-                {<Routes>
-                    <Route index element={<PlansList/>}/>
+                <Routes>
+                    <Route path={'/'} element={<StartPage/>}/>
+                    <Route path={'plans'} element={<PlansList/>}/>
                     <Route path={'success'} element={<SuccessPage/>}/>
                     <Route path={'cancel'} element={<CancellationPage/>}/>
                     <Route path={'login'} element={<LoginPage/>}/>
@@ -40,7 +52,8 @@ function App() {
                     <Route path={'reset_request'} element={<ResetPasswPage/>}/>
                     <Route path={'reset_password'} element={<ChangePasswPage/>}/>
                     <Route path={'account'} element={<AccountPage/>}/>
-                </Routes>}
+                    <Route path={'changePlan'} element={<ChangePlanPage currentPlan={currentPlan}/>}/>
+                </Routes>
             </div>
         </div>
     );

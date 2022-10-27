@@ -5,7 +5,7 @@ const setAppStatus = createAction<{ status: RequestStatusType }>('app/setAppStat
 
 const setAppError = createAction<{ error: string | null }>('app/setAppError')
 
-export const appActions = {
+export const appCommonActions = {
     setAppStatus,
     setAppError
 }
