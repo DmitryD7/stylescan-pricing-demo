@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Route, Routes, useNavigate} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import s from './App.module.css';
 import PlansList from "./pages/PlansList/PlansList";
 import SuccessPage from "./pages/SuccessPage/SuccessPage";
@@ -25,7 +25,7 @@ function App() {
 
     useEffect(() => {
         dispatch(initializeApp());
-    }, []);
+    }, [dispatch, initializeApp]);
 
     // if (status === "loading") {
     //     return <Loader/>

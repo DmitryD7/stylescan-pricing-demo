@@ -17,6 +17,8 @@ export const redirectToCheckout = (dispatch: any) => async (item: { price: strin
     const checkoutOptions = {
         lineItems: [item],
         mode: 'subscription',
+        clientReferenceId: 'helloFromLocal',
+        // customerEmail: 'di@gmail.com',
         successUrl: `${window.location.origin}/success`,
         cancelUrl: `${window.location.origin}/cancel`
     };
