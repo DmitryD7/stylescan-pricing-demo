@@ -8,10 +8,14 @@ const authActions = {
     ...authSlice.actions,
 };
 
+const authSelectors = {
+    selectIsLoggedIn
+};
+
 const authReducer = authSlice.reducer;
 
 export {
     authReducer,
-    selectIsLoggedIn,
+    authSelectors,
     authActions,
 };

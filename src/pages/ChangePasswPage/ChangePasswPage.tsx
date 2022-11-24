@@ -4,10 +4,13 @@ import {FormikHelpers, useFormik} from "formik";
 import {useNavigate} from 'react-router-dom';
 import {passwordConfirmValidate, passwordValidate, useAppDispatch} from "../../utils/utils";
 import {FormErrorType} from "../../app/types";
+import {authActions} from "../../app/authReducer";
 
 function ChangePasswPage() {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const {changePassword} = authActions;
 
     const validate = (values: FormValuesType) => {
         const errors: FormErrorType = {};
@@ -17,7 +20,7 @@ function ChangePasswPage() {
         return errors.password || errors.passwordConfirmation ? errors : {};
     };
 
-    const renderVerifyPage = () => navigate('/')
+    const renderVerifyPage = () => navigate('/account')
 
     const formik = useFormik({
         initialValues: {
@@ -26,8 +29,15 @@ function ChangePasswPage() {
             passwordConfirmation: '',
         },
         validate,
-        onSubmit: (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            console.log('ChangePasswPage:  ', values)
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
+            const {confirmCode, password} = values;
+            const res = await dispatch(changePassword({code: confirmCode, password}));
+            if (res.payload?.error) {
+                const error = res.payload.error;
+                formikHelpers.setFieldError('confirmCode', error);
+            } else {
+                renderVerifyPage()
+            }
         },
     });
 

@@ -2,18 +2,22 @@ import React from 'react';
 import s from './LoginPage.module.css';
 import {FormikHelpers, useFormik} from "formik";
 import {useSelector} from "react-redux";
-import {authActions, selectIsLoggedIn} from "../../app/authReducer";
+import {authActions, authSelectors} from "../../app/authReducer";
 import {Link, Navigate} from 'react-router-dom';
 import {emailValidate, passwordValidate, useAppDispatch} from "../../utils/utils";
 import {LoginParamsType} from "../../api/api";
 import {FormErrorType} from "../../app/types";
-import {selectStatus} from "../../app/appReducer";
+import {appSelectors} from "../../app/appReducer";
 import {Loader} from "../../components/Loader/Loader";
 
 function LoginPage() {
+    const dispatch = useAppDispatch();
+
+    const {selectStatus} = appSelectors;
+    const {selectIsLoggedIn} = authSelectors;
+
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const status = useSelector(selectStatus);
-    const dispatch = useAppDispatch();
 
     const validate = (values: LoginParamsType) => {
         const errors: FormErrorType = {};

@@ -11,34 +11,38 @@ import VerifyingEmailPage from "./pages/VerifyingEmailPage/VerifyingEmailPage";
 import ResetPasswPage from "./pages/ResetPasswPage/ResetPasswPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import {useAppDispatch} from "./utils/utils";
-import {appActions} from './app/appReducer';
+import {appActions, appSelectors} from './app/appReducer';
 import ChangePasswPage from "./pages/ChangePasswPage/ChangePasswPage";
 import ChangePlanPage from "./pages/ChangePlanPage/ChangePlanPage";
 import {useSelector} from "react-redux";
 import {accSelectors} from "./app/accountReducer";
 import EnterprisePendingPage from './pages/EnterprisePendingPage/EnterprisePendingPage';
+import {Loader} from "./components/Loader/Loader";
+import {CurrentPlanType} from "./app/accountReducer/accountReducer";
+import {authSelectors} from "./app/authReducer";
 
 function App() {
     const dispatch = useAppDispatch();
+    const {selectCurrentPlan} = accSelectors;
     const {initializeApp} = appActions;
-    const currentPlan = useSelector(accSelectors.selectCurrentPlan);
+    const {selectStatus} = appSelectors;
+    const {selectIsLoggedIn} = authSelectors;
+
+    const status = useSelector(selectStatus);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const currentPlan = useSelector(selectCurrentPlan);
 
     useEffect(() => {
         dispatch(initializeApp());
     }, [dispatch, initializeApp]);
 
-    // if (status === "loading") {
-    //     return <Loader/>
-    // }
-
-    const StartPage = () => currentPlan === '' ? <PlansList/> : <AccountPage/>
-
     return (
         <div className={s.Container}>
             <div className={s.App}>
                 <Header/>
+                {status === "loading" && <Loader/>}
                 <Routes>
-                    <Route path={'/'} element={<StartPage/>}/>
+                    <Route path={'/'} element={<StartPage isLoggedIn={isLoggedIn} currentPlan={currentPlan}/>}/>
                     <Route path={'plans'} element={<PlansList/>}/>
                     <Route path={'success'} element={<SuccessPage/>}/>
                     <Route path={'cancel'} element={<CancellationPage/>}/>
@@ -57,3 +61,15 @@ function App() {
 }
 
 export default App;
+
+const StartPage = (props: { currentPlan: CurrentPlanType, isLoggedIn: boolean }) => {
+    const {currentPlan, isLoggedIn} = props;
+
+    if (!isLoggedIn) {
+        return <LoginPage/>
+    } else if (currentPlan === '') {
+        return <PlansList/>
+    } else {
+        return <AccountPage/>
+    }
+};

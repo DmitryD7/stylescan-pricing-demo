@@ -1,16 +1,17 @@
 import React, {useEffect} from 'react';
 import s from './EnterprisePendingPage.module.css';
 import {useAppDispatch} from "../../utils/utils";
-import {authActions, selectIsLoggedIn} from "../../app/authReducer";
+import {authActions, authSelectors} from "../../app/authReducer";
 import {Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {accountActions, accSelectors} from "../../app/accountReducer";
-import {selectStatus} from "../../app/appReducer";
 import {Loader} from "../../components/Loader/Loader";
+import {appSelectors} from "../../app/appReducer";
 
 function EnterprisePendingPage() {
     const dispatch = useAppDispatch();
-    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
+    const {selectStatus} = appSelectors;
     const status = useSelector(selectStatus);
 
     const {selectAccEmail} = accSelectors;
