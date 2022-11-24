@@ -7,14 +7,11 @@ const instance = axios.create({
 });
 
 export const authAPI = {
-    me() {
-        return instance.get('');
-    },
     signUp(data: SignupParamsType) {
-        return instance.post('signup', data);
+        return instance.post<SignupResponseType>('signup', data);
     },
     login(data: LoginParamsType) {
-        return instance.post('login', data);
+        return instance.post<LoginResponseType>('login', data);
     },
     logout() {
         return instance.get('logout');
@@ -22,14 +19,14 @@ export const authAPI = {
     deleteAcc() {
         return instance.get('delete');
     },
-    changePassword(data: ResetPasswordDataType) {
-        return instance.post('reset_password', data);
+    changePassword(data: ChangePasswordDataType) {
+        return instance.post('reset-password', data);
     },
-    requestResetPassword(data: RequestResetPasswordType) {
-        return instance.post('reset_request', data);
+    requestPasswordReset(data: RequestPasswordResetType) {
+        return instance.post('reset-request', data);
     },
     refresh() {
-        return instance.post('refresh');
+        return instance.post<LoginResponseType>('refresh');
     },
     debug() {
         return instance.get('debug.json');
@@ -40,15 +37,24 @@ export type LoginParamsType = {
     email: string,
     password: string,
 }
+export type LoginResponseType = {
+    email: string,		// account identifier
+    payment: boolean,		// does user have a stripe account
+    admin?: boolean,		// is user an administrator
+    error?: string
+}
 
 export type SignupParamsType = LoginParamsType & { redirect?: string }
+export type SignupResponseType = {
+    email: string
+}
 
-export type RequestResetPasswordType = {
+export type RequestPasswordResetType = {
     email: string,
     redirect?: string,
 }
 
-export type ResetPasswordDataType = {
+export type ChangePasswordDataType = {
     code: string,
     password: string,
 }
