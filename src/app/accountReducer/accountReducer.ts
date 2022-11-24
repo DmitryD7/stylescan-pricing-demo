@@ -3,7 +3,7 @@ import {authAPI} from "../../api/api";
 import {handleAsyncServerAppError, handleAsyncServerNetworkError} from "../../utils/errorUtils";
 import {appCommonActions} from "../applicationCommonActions";
 
-const {setAppStatus} = appCommonActions;
+const {setAppStatus, setAppError} = appCommonActions;
 
 const debug = createAsyncThunk('auth/debug', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}));
@@ -11,6 +11,7 @@ const debug = createAsyncThunk('auth/debug', async (param, thunkAPI) => {
         const res = await authAPI.debug();
         if (res.data.account) {
             thunkAPI.dispatch(setAppStatus({status: 'succeeded'}));
+            thunkAPI.dispatch(setAppError({error: null}));
             return res.data.account.email;
         } else {
             return handleAsyncServerAppError(res.data, thunkAPI);
@@ -18,7 +19,7 @@ const debug = createAsyncThunk('auth/debug', async (param, thunkAPI) => {
     } catch (error: unknown | any) {
         return handleAsyncServerNetworkError(error, thunkAPI);
     }
-})
+});
 
 export const accountSlice = createSlice({
     name: 'account',
