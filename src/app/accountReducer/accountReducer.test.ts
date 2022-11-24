@@ -1,7 +1,7 @@
 import {accountActions, accountReducer} from "./index";
 import {CurrentPlanType} from "./accountReducer";
 
-const {debug, setCurrentPlan} = accountActions;
+const {debug, setCurrentPlan, setIsEnterprisePending} = accountActions;
 
 export type InitialStateType = {
     email: string,
@@ -27,8 +27,16 @@ test('correct email should be set', () => {
 });
 
 test('correct plan should be set', () => {
-    const action = setCurrentPlan({currentPlan: 'Entry'})
+    const action = setCurrentPlan({currentPlan: 'Entry'});
 
     const endState = accountReducer(startState, action);
     expect(endState.currentPlan).toBe('Entry');
+});
+
+test('correct value of EnterprisePending must be set', () => {
+    const action = setIsEnterprisePending({isEnterprisePending: true});
+
+    const endState = accountReducer(startState, action);
+
+    expect(endState.isEnterprisePending).toBeTruthy();
 });
