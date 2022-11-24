@@ -80,7 +80,6 @@ const changePassword = createAsyncThunk<undefined, ChangePasswordDataType, Thunk
     thunkAPI.dispatch(setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.changePassword(param);
-        console.log(res)
         if (!res.data.error) {
             thunkAPI.dispatch(setAppStatus({status: 'succeeded'}));
             thunkAPI.dispatch(setAppError({error: null}));
