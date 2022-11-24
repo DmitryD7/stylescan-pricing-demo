@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './PlanCard.module.css';
 import {IPlan} from "../../assets/plans";
-import {Link, Navigate, useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import mostPopularIco from '../../assets/Vector.svg'
 import Button from "../Button/Button";
 import {CurrentPlanType} from "../../app/accountReducer/accountReducer";
@@ -9,10 +9,13 @@ import {useAppDispatch} from "../../utils/utils";
 import {accountActions} from "../../app/accountReducer";
 
 function PlanCard(props: PlanCardPropsType) {
-    const {title, priceUI, description, isMostPopular, isDisabledButton, onBuyClick, price, quantity, setCurrentPlan} = props;
     const dispatch = useAppDispatch();
-    const {setIsEnterprisePending} = accountActions;
     const navigate = useNavigate();
+
+    const {isDisabledButton, onBuyClick, setCurrentPlan, plan} = props;
+    const {title, priceUI, price, quantity, description, isMostPopular} = plan;
+
+    const {setIsEnterprisePending} = accountActions;
 
     const onClickHandler = () => {
         onBuyClick({price, quantity});
@@ -67,10 +70,11 @@ function PlanCard(props: PlanCardPropsType) {
     );
 }
 
-type PlanCardPropsType = IPlan & {
+type PlanCardPropsType = {
+    plan: IPlan
     isDisabledButton: boolean
     onBuyClick: (item: { price: string, quantity: number }) => void
     setCurrentPlan: (currentPlan: CurrentPlanType) => void
 }
 
-export default PlanCard;
+export const PlanCardMemo = React.memo(PlanCard);
